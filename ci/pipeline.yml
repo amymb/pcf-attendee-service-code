@@ -1,17 +1,51 @@
 ---
 resources:
-- name: attendee-service
+- name: attendee-service-source
   type: git
   source:
-    uri: https://github.com/pivotal-enablement/attendee-service
+    uri: https://github.com/amymb/pcf-attendee-service-code  #<---- REPLACE ME
     branch: master
 
+- name: deploy-attendee-service
+  type: cf
+  source:
+    api: api.run.pivotal.io        #<---- REPLACE ME
+    username: {{cf-user}}
+    password: {{cf-password}}
+    organization: Pivotal-Enablement    #<---- REPLACE ME
+    space: staging         #<---- REPLACE ME
+    skip_cert_check: true
+
 jobs:
-- name: package
+- name: test
   public: true
   plan:
-  - get: attendee-service
+  - get: attendee-service-source
+    trigger: true
+  - task: test
+    file: attendee-service-source/ci/tasks/test.yml
+
+- name: deploy
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [test]
   - task: package
-    privileged: true
-    file: attendee-service/ci/tasks/package.yml
+    file: attendee-service-source/ci/tasks/package.yml
+  - put: deploy-attendee-service
+    params:
+      manifest: attendee-service-source/manifest.yml
+      path: package-output/attendee-service.jar
+
+- name: smoke_test
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [deploy]
+  - task: smoke_test
+    file: attendee-service-source/ci/tasks/smoke-test.yml
+    params:
+      ATTENDEE_SERVICE_URL: https://attendee-service-autotomic-vitrifiability.cfapps.io   #<---- REPLACE ME
 
