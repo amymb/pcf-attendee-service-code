@@ -10,7 +10,23 @@ if [ -z $ATTENDEE_SERVICE_URL ]; then
 fi
 
 pushd attendee-service-source
-  echo "Running smoke tests for Attendee Service deployed at $ATTENDEE_SERVICE_URL"
+  echo "Running smoke tests the first time for Attendee Service deployed at $ATTENDEE_SERVICE_URL"
+  smoke-tests/bin/test $ATTENDEE_SERVICE_URL
+popd
+
+pushd attendee-service-source
+  echo "Running smoke tests the second time for Attendee Service deployed at $ATTENDEE_SERVICE_URL"
+  smoke-tests/bin/test $ATTENDEE_SERVICE_URL
+popd
+
+
+pushd attendee-service-source
+  echo "Running smoke tests the third time for  Attendee Service deployed at $ATTENDEE_SERVICE_URL"
+  smoke-tests/bin/test $ATTENDEE_SERVICE_URL
+popd
+
+pushd attendee-service-source
+  echo "Running smoke tests the last time for Attendee Service deployed at $ATTENDEE_SERVICE_URL"
   smoke-tests/bin/test $ATTENDEE_SERVICE_URL
 popd
 

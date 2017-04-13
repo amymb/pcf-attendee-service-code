@@ -1,0 +1,15 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: ubuntu
+    tag: "latest"
+
+params:
+  USER:
+  PASSWORD:
+
+run:
+  path: attendee-service-source/ci/tasks/remove-blue.sh

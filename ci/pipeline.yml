@@ -25,7 +25,7 @@ jobs:
   - task: test
     file: attendee-service-source/ci/tasks/test.yml
 
-- name: deploy
+- name: deploy_green
   public: true
   plan:
   - get: attendee-service-source
@@ -36,16 +36,43 @@ jobs:
   - put: deploy-attendee-service
     params:
       manifest: attendee-service-source/manifest.yml
-      path: package-output/attendee-service.jar
+      path: package-output/attendee-service.jar 
 
-- name: smoke_test
+- name: smoke_test_1
   public: true
   plan:
   - get: attendee-service-source
     trigger: true
-    passed: [deploy]
+    passed: [deploy_green]
   - task: smoke_test
     file: attendee-service-source/ci/tasks/smoke-test.yml
     params:
-      ATTENDEE_SERVICE_URL: https://attendee-service-autotomic-vitrifiability.cfapps.io   #<---- REPLACE ME
+      ATTENDEE_SERVICE_TEST_URL: https://attendee-service-automatic-vitrifiability-test.cfapps.io   #<---- REPLACE ME
 
+- name: reroute_green
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [smoke_test_1]
+  - task: reroute_green
+    file: attendee-service-source/ci/tasks/reroute-green.yml
+    params:
+      USERNAME: {{cf-user}}
+      PASSWORD: {{cf-password}}
+  - task: smoke_test
+    file: attendee-service-source/ci/tasks/smoke-test.yml
+    params:
+      ATTENDEE_SERVICE_URL: https://attendee-service-autotomic-vitrifiability.cfapps.io
+
+- name: remove_blue
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [reroute_green]
+  - task: remove_blue
+    file: attendee-service-source/ci/tasks/remove-blue.yml
+    params:
+      USERNAME: {{cf-user}}
+      PASSWORD: {{cf-password}}
