@@ -23,7 +23,7 @@ cf unmap-route attendee-service cfapps.io -n attendee-service-autotomic-vitrifia
 
 echo "blue is no longer at pubic route"
 
-cf delete attendee-service
+cf delete attendee-service -y
 
 echo "blue is no longer on cf"
 
