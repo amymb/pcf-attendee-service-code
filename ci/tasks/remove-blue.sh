@@ -17,7 +17,7 @@ sudo curl -o /usr/share/bash-completion/completions/cf https://raw.githubusercon
 # ...and to confirm your cf CLI version
 cf --version
 
-cf login -a api.run.pivotal.io -u $USERNAME -p $PASSWORD -o Pivotal-Enablement -s staging --skip-ssl-certification
+cf login -a api.run.pivotal.io -u $USERNAME -p $PASSWORD -o Pivotal-Enablement -s staging --skip-ssl-validation
 
 cf unmap-route attendee-service cfapps.io -n attendee-service-autotomic-vitrifiability
 

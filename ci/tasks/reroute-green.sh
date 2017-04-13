@@ -12,7 +12,7 @@ sudo apt-get update
 
 sudo apt-get install -y cf-cli
 
-cf login -a api.run.pivotal.io -u $USERNAME -p $PASSWORD -o Pivotal-Enablement -s staging --skip-ssl-certification
+cf login -a api.run.pivotal.io -u $USERNAME -p $PASSWORD -o Pivotal-Enablement -s staging --skip-ssl-validation
 
 cf map-route attendee-service-green cfapps.io -n attendee-service-autotomic-vitrifiability
 
