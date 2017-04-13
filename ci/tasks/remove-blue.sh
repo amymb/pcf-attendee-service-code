@@ -23,7 +23,7 @@ cf unmap-route attendee-service cfapps.io -n attendee-service-autotomic-vitrifia
 
 echo "blue is no longer at pubic route"
 
-cf unmap-route attendee-service-green cfapps.io -n attendee-service-autotomic-vitrifiability-temp
+cf unmap-route attendee-service-green cfapps.io -n attendee-service-autotomic-vitrifiability-test
 
 echo "green is no longer at private route"
 
