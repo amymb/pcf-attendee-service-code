@@ -47,7 +47,7 @@ jobs:
   - task: smoke_test
     file: attendee-service-source/ci/tasks/smoke-test.yml
     params:
-      ATTENDEE_SERVICE_TEST_URL: https://attendee-service-automatic-vitrifiability-test.cfapps.io   #<---- REPLACE ME
+      ATTENDEE_SERVICE_URL: https://attendee-service-automatic-vitrifiability-test.cfapps.io   #<---- REPLACE ME
 
 - name: reroute_green
   public: true
