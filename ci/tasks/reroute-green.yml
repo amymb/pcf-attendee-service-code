@@ -7,6 +7,9 @@ image_resource:
     repository: ubuntu
     tag: "latest"
 
+inputs:
+- name: attendee-service-source
+
 params:
   USER:
   PASSWORD:
