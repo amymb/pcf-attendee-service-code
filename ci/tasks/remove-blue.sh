@@ -2,7 +2,10 @@
 
 set -ex
 
+
 apt-get update && apt-get install -y curl
+apt-get install sudo
+
 # ...download & extract Mac OS X binary
 curl -L "https://cli.run.pivotal.io/stable?release=macosx64-binary&source=github" | tar -zx
 # ...or Linux 64-bit binary
